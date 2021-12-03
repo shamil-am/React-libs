@@ -1,13 +1,21 @@
 import styled from "styled-components";
+import {
+  ButtonBlueStyled,
+  ButtonDarkStyled,
+  ButtonRedStyled,
+  StyledList,
+} from "./AllStyled";
 import InheritedButton from "./InheritedButton";
+import KeyframeStayled from "./KeyframeStayled";
 import StyledButton from "./StyledButton";
+import StyledCondition from "./StyledCondition";
 
 ///
 const Header = styled.div`
   max-width: 100%;
-  background-color: teal;
   display: flex;
   flex-direction: column;
+  color: ${props=> props.theme.colors.textMain};
   @media (min-width: 768px) {
     flex-direction: row;
     justify-content: space-between;
@@ -15,7 +23,7 @@ const Header = styled.div`
 `;
 const Main = styled.div`
   max-width: 100%;
-  background-color: #cecece;
+  background-color: ${props=> props.theme.colors.secondBg};
   height: 80vh;
   @media (min-width: 768px) {
     max-width: 740px;
@@ -63,6 +71,13 @@ const NavStyled = styled.div`
     flex-basis: 6 0%;
   }
 `;
+const Link = styled.a.attrs(() => ({
+  target: "_blank",
+}))`
+  color: violet;
+  text-decoration: none;
+  font-size: 1.5rem;
+`;
 function App() {
   return (
     <>
@@ -96,6 +111,24 @@ function App() {
         <StyledButton type="blue">blue Button</StyledButton>
         <br />
         <InheritedButton>Inherited button</InheritedButton>
+        <StyledCondition justifyContent="center">
+          <div style={{ border: "1px solid red" }}>1</div>
+          <div style={{ border: "1px solid red" }}>2</div>
+          <div style={{ border: "1px solid red" }}>3</div>
+        </StyledCondition>
+        <KeyframeStayled>
+          <div className="child">child</div>
+        </KeyframeStayled>
+        <Link href="http://google.com">go to new page</Link>
+        <ButtonDarkStyled size="small">Button dark</ButtonDarkStyled>
+        <ButtonBlueStyled size="medium">Button blue</ButtonBlueStyled>
+        <ButtonRedStyled size="small">Button red</ButtonRedStyled>
+        <StyledList>
+          <li>Home</li>
+          <li>About</li>
+          <li>Navigation</li>
+          <li>Contact</li>
+        </StyledList>
       </Main>
     </>
   );
