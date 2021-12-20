@@ -1,7 +1,9 @@
 import React from "react";
 import "./form.css";
 import { useFormik } from "formik";
+import * as Yup from "yup";
 
+///
 const initialValues = {
   name: "",
   email: "",
@@ -12,36 +14,46 @@ const onSubmit = (values) => {
   console.log(values);
 };
 
-const validate = (values) => {
-  const errors = {};
-  if (!values.name) {
-    errors.name = "Please type your name";
-  }
-  if (!values.email) {
-    errors.email = "Email is required";
-    //eslint-disable-next-line
-  } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
-  }
-  if (!values.channel) {
-    errors.channel = "Select your channel";
-  }
-  return errors;
-};
+// const validate = (values) => {
+//   const errors = {};
+//   if (!values.name) {
+//     errors.name = "Please type your name";
+//   }
+//   if (!values.email) {
+//     errors.email = "Email is required";
+//     //eslint-disable-next-line
+//   } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(values.email)) {
+//     errors.email = "Invalid email address";
+//   }
+//   if (!values.channel) {
+//     errors.channel = "Select your channel";
+//   }
+//   return errors;
+// };
+// ! validate alternative with Yup
+
+const validationSchema = Yup.object({
+  name: Yup.string().required("Adinizi qeyd edin"),
+  email: Yup.string()
+    .email("Yalnis email formati")
+    .required("Emailinizi qeyd edin"),
+});
 
 //form components
 const Form = () => {
   const formik = useFormik({
     initialValues,
     onSubmit,
-    validate,
+    // validate,
+    // !alternative yup
+    validationSchema,
   });
   // console.log("Formik values", formik.values);
   // console.log("Formik errors", formik.errors);
   // console.log("Visited field", formik.touched);
   return (
     <div>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit} noValidate>
         <div className="form-control">
           <label htmlFor="name">Name</label>
           <input
