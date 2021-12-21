@@ -5,28 +5,33 @@ form {
   width: 25%;
 }
 form .form-control {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  height: 70px;
 }
 form .form-control label {
   display: block;
   font-size: 1.5rem;
-  margin-bottom: .25rem;
+  margin-bottom: 0.25rem;
   font-weight: bold;
 }
-form .form-control input {
+form .form-control input,
+textarea {
   width: 100%;
   padding: 0.5rem 0;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 }
-form .form-control .error {
+form .form-control .error-msg {
   color: red;
+  font-weight: bold;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
 }
-form  button {
+form button {
   color: white;
   font-size: 1rem;
   background-color: blue;
-  padding: .5rem 2rem;
+  padding: 0.5rem 2rem;
   border: none;
   outline: none;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 }

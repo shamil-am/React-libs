@@ -1,10 +1,10 @@
-import Form from "./Components/Form";
+import FormExample from "./Components/Form";
 
 function App() {
   return (
     <div className="App">
       <h1>Formik usage</h1>
-      <Form/>
+      <FormExample />
     </div>
   );
 }
