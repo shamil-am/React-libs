@@ -1,6 +1,13 @@
 import React from "react";
 import "./form.css";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import {
+  Formik,
+  Form,
+  Field,
+  ErrorMessage,
+  FieldArray,
+  FastField,
+} from "formik";
 import * as Yup from "yup";
 import TextError from "./TextError";
 
@@ -13,6 +20,8 @@ const initialValues = {
     facebook: "",
     twitter: "",
   },
+  phoneNumbers: ["0", "1"],
+  countries: [""],
 };
 const onSubmit = (values) => {
   window.alert("Form submitted!");
@@ -24,6 +33,9 @@ const validationSchema = Yup.object({
     .email("Yalnis email formati")
     .required("Emailinizi qeyd edin"),
   channel: Yup.string().required("Kanal secin"),
+  social: Yup.object().shape({
+    facebook: Yup.string().required("type facebook profile"),
+  }),
 });
 // component
 const FormExample = () => {
@@ -32,11 +44,24 @@ const FormExample = () => {
       initialValues={initialValues}
       onSubmit={onSubmit}
       validationSchema={validationSchema}
+      // validateOnChange={false}
+      // validateOnBlur={false}
     >
       <Form>
         <div className="form-control">
           <label htmlFor="name">Name</label>
-          <Field type="text " id="name" name="name" autoComplete="off" />
+          <FastField name="name" autoComplete="off">
+            {(fieldProps) => {
+              console.log("rendered");
+              const { field, form, meta } = fieldProps;
+              return (
+                <div>
+                  <input type="text" id="name" {...field} />
+                  {/* {meta.touched && meta.error ? <div>{meta.error}</div> : null} */}
+                </div>
+              );
+            }}
+          </FastField>
           <ErrorMessage name="name" component={TextError} />
         </div>
         <div className="form-control">
@@ -56,10 +81,49 @@ const FormExample = () => {
         <div className="form-control">
           <label htmlFor="facebook">Facebook</label>
           <Field type="text" id="facebook" name="social.facebook" />
+          <ErrorMessage name="social.facebook" component={TextError} />
         </div>
         <div className="form-control">
           <label htmlFor="twitter">twitter</label>
           <Field type="text" id="twitter" name="social.twitter" />
+        </div>
+        <div className="form-control">
+          <label htmlFor="phoneNumber0">Number-1</label>
+          <Field type="number" id="number" name="phoneNumbers[0]" />
+        </div>
+        <div className="form-control">
+          <label htmlFor="phoneNumber1">Number-2</label>
+          <Field type="number" id="phoneNumber1" name="phoneNumbers[1]" />
+        </div>
+        <div className="">
+          <h2>Visited countries</h2>
+          <FieldArray name="countries">
+            {(fieldArrProp) => {
+              const { push, remove, form } = fieldArrProp;
+              const { values } = form;
+              const { countries } = values;
+
+              return (
+                <div>
+                  <button type="button" onClick={() => push(" ")}>
+                    +
+                  </button>
+                  {countries.map((country, index) => {
+                    return (
+                      <div key={index} className="form-control">
+                        <Field name={`countries[${index}]`} />
+                        {index > 0 ? (
+                          <button type="button" onClick={() => remove(index)}>
+                            -
+                          </button>
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            }}
+          </FieldArray>
         </div>
 
         <button type="submit">Submit</button>
