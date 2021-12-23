@@ -23,9 +23,11 @@ const initialValues = {
   phoneNumbers: ["0", "1"],
   countries: [""],
 };
-const onSubmit = (values) => {
+const onSubmit = (values, onSubmitProps) => {
   window.alert("Form submitted!");
   console.log(values);
+  // console.log(onSubmitProps);
+  onSubmitProps.resetForm();
 };
 const validationSchema = Yup.object({
   name: Yup.string().required("Adinizi qeyd edin"),
