@@ -6,7 +6,7 @@ const TextArea = (props) => {
   return (
     <div className="form-control">
       <label htmlFor={id}>{label}</label>
-      <Field as="textarea" name={name} id={id} cols="30" rows="10" />
+      <Field as="textarea" name={name} id={id} cols="30" rows="10" {...rest} />
       <ErrorMessage name={name} component={TextError} />
     </div>
   );
